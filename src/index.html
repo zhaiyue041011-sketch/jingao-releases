@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>镜稿 · 剧本与分镜工作台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" id="brand-home" aria-label="返回项目主页">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span><b>镜稿</b><small>JINGAO STUDIO</small></span>
+        </button>
+        <div class="topbar-actions">
+          <span class="save-state" id="global-status" aria-live="polite"><i></i> 本地存储已就绪</span>
+          <button class="icon-button" id="data-folder-button" title="打开数据文件夹" aria-label="打开数据文件夹">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.8h6l1.8 2h9.2v8.9a2 2 0 0 1-2 2h-15v-12.9Zm0 0v-2h5l1.6 2"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main id="home-view" class="view home-view">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">CREATIVE WORKSPACE</p>
+            <h1>把故事写在同一个画面里。</h1>
+            <p class="hero-copy">项目、剧本与分镜并排整理，所有内容自动保存在这台电脑上。</p>
+          </div>
+          <div class="hero-actions">
+            <button class="button button-ghost" id="refresh-projects-button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+              <span id="refresh-projects-label">刷新与更新</span>
+            </button>
+            <button class="button button-primary" id="new-project-button">
+              <span class="plus">＋</span> 新建项目
+            </button>
+          </div>
+        </section>
+
+        <section class="project-section">
+          <div class="section-heading">
+            <div><span class="section-line"></span><h2>我的项目</h2></div>
+            <span id="project-count">0 个项目</span>
+          </div>
+          <div id="project-grid" class="project-grid" aria-live="polite"></div>
+          <div id="empty-projects" class="empty-state" hidden>
+            <div class="empty-visual"><span></span><span></span><span></span></div>
+            <h3>这里还没有故事</h3>
+            <p>创建第一个项目，应用会自动建立「第 1 集」。</p>
+            <button class="button button-primary" id="empty-create-button">创建项目</button>
+          </div>
+        </section>
+      </main>
+
+      <main id="editor-view" class="view editor-view" hidden>
+        <aside class="episode-sidebar">
+          <div class="sidebar-head">
+            <button class="back-button" id="back-button" aria-label="返回项目主页">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+            </button>
+            <div><small>当前项目</small><h2 id="current-project-name">项目名称</h2></div>
+          </div>
+          <div class="episode-list-head">
+            <span>集数</span>
+            <button id="add-episode-button" class="mini-button" title="新增一集" aria-label="新增一集">＋</button>
+          </div>
+          <nav id="episode-list" class="episode-list" aria-label="项目集数"></nav>
+          <div class="sidebar-foot">
+            <span id="app-version">镜稿 v0.1.0</span>
+            <span>本地离线工作</span>
+          </div>
+        </aside>
+
+        <section class="workspace">
+          <header class="workspace-toolbar">
+            <div class="episode-title-wrap">
+              <button class="sidebar-toggle" id="sidebar-toggle" title="收起集数栏" aria-label="收起集数栏">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+              </button>
+              <span class="episode-index" id="episode-index">EP. 01</span>
+              <input id="episode-title" class="episode-title" value="第 1 集" maxlength="80" aria-label="集数标题" />
+            </div>
+            <div class="toolbar-actions">
+              <span class="save-state" id="save-state"><i></i> 已保存</span>
+              <button class="button button-ghost button-compact" id="reload-episode-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></svg>
+                刷新
+              </button>
+              <button class="button button-primary button-compact" id="save-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h12l2 2v16H5V3Zm3 0v6h8V3M8 21v-8h8v8"/></svg>
+                保存 <kbd>Ctrl S</kbd>
+              </button>
+              <button class="more-button" id="delete-episode-button" title="删除当前集" aria-label="删除当前集">•••</button>
+            </div>
+          </header>
+
+          <div class="editor-grid" id="editor-grid">
+            <article class="editor-panel" id="script-panel">
+              <header class="panel-head">
+                <div>
+                  <span class="panel-icon script-icon">文</span>
+                  <div><h3>剧本</h3><p>场景、动作与对白</p></div>
+                </div>
+                <button class="expand-button" data-panel="script" title="放大剧本" aria-label="放大剧本">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+                </button>
+              </header>
+              <div class="editor-canvas">
+                <textarea id="script-editor" spellcheck="false" placeholder="开始写作…&#10;&#10;场 1 · 内景 · 日&#10;&#10;在这里描述人物、动作和对白。"></textarea>
+              </div>
+              <footer class="panel-foot"><span id="script-count">0 字</span><span>剧本编辑器</span></footer>
+            </article>
+
+            <article class="editor-panel" id="storyboard-panel">
+              <header class="panel-head">
+                <div>
+                  <span class="panel-icon board-icon">镜</span>
+                  <div><h3>分镜</h3><p>镜头、画面与声音</p></div>
+                </div>
+                <button class="expand-button" data-panel="storyboard" title="放大分镜" aria-label="放大分镜">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+                </button>
+              </header>
+              <div class="editor-canvas storyboard-canvas">
+                <div class="board-ruler"><span>SHOT</span><span>画面 / 运镜 / 声音</span></div>
+                <textarea id="storyboard-editor" spellcheck="false" placeholder="SHOT 01｜全景｜5 秒&#10;画面：&#10;运镜：&#10;声音：&#10;&#10;SHOT 02｜近景｜3 秒&#10;画面："></textarea>
+              </div>
+              <footer class="panel-foot"><span id="storyboard-count">0 个镜头</span><span>分镜编辑器</span></footer>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="project-dialog" class="modal">
+      <form method="dialog" id="project-form">
+        <header><span class="modal-kicker">NEW PROJECT</span><button type="button" class="dialog-close" data-close-dialog aria-label="关闭">×</button></header>
+        <h2>创建一个新故事</h2>
+        <p>之后可以在项目内继续添加集数。</p>
+        <label>项目名称<input id="project-name-input" maxlength="60" autocomplete="off" placeholder="例如：山海之间" required /></label>
+        <label>一句话备注 <span>选填</span><textarea id="project-description-input" maxlength="240" placeholder="记录题材、创作目标或进度…"></textarea></label>
+        <footer><button type="button" class="button button-ghost" data-close-dialog>取消</button><button type="submit" class="button button-primary">创建项目</button></footer>
+      </form>
+    </dialog>
+
+    <dialog id="episode-dialog" class="modal modal-small">
+      <form method="dialog" id="episode-form">
+        <header><span class="modal-kicker">NEW EPISODE</span><button type="button" class="dialog-close" data-close-dialog aria-label="关闭">×</button></header>
+        <h2>新增一集</h2>
+        <label>集数名称<input id="episode-name-input" maxlength="80" autocomplete="off" placeholder="例如：第 2 集 · 初遇" required /></label>
+        <footer><button type="button" class="button button-ghost" data-close-dialog>取消</button><button type="submit" class="button button-primary">添加</button></footer>
+      </form>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+name: Build and Release Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run dist:win
+      - name: Read version
+        id: version
+        shell: pwsh
+        run: |
+          $version = node -p "require('./package.json').version"
+          "tag=v$version" >> $env:GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Jingao-Windows
+          path: |
+            release/*.exe
+            release/latest.yml
+            release/*.blockmap
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: 镜稿 ${{ steps.version.outputs.tag }}
+          generate_release_notes: true
+          make_latest: true
+          files: |
+            release/*.exe
+            release/latest.yml
+            release/*.blockmap

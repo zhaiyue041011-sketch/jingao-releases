@@ -1,0 +1,68 @@
+{
+  "name": "jingao-studio",
+  "version": "0.2.0",
+  "description": "专为剧本与分镜创作设计的本地桌面工作台",
+  "main": "src/main.js",
+  "author": "Jingao Studio",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis",
+    "dist:portable": "electron-builder --win portable",
+    "release:win": "electron-builder --win nsis --publish always",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhaiyue041011-sketch/jingao-releases.git"
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.jingao.studio",
+    "productName": "镜稿",
+    "asar": true,
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": true,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "镜稿",
+      "artifactName": "Jingao-${version}-${arch}-Setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "Jingao-${version}-${arch}-Portable.${ext}"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "zhaiyue041011-sketch",
+      "repo": "jingao-releases",
+      "releaseType": "release"
+    }
+  }
+}
